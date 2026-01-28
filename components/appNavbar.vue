@@ -24,7 +24,7 @@
         <span class="label">Deseados</span>
       </NuxtLink>
 
-      <NuxtLink to="/" class="nav-item" active-class="active">
+      <NuxtLink to="/profile" class="nav-item" active-class="active">
         <span class="icon">👤</span>
         <span class="label">Perfil</span>
       </NuxtLink>
