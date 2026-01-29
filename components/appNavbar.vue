@@ -1,112 +1,61 @@
 <script setup lang="ts">
+
 </script>
+
 <template>
-  <nav class="bottom-nav">
-    <div class="nav-container">
-      <NuxtLink to="/" class="nav-item" active-class="active">
-        <span class="icon">🏠</span>
-        <span class="label">Inicio</span>
-      </NuxtLink>
+  <nav class="fixed bottom-0 left-0 right-0 z-50">
+    <div class="bg-slate-950/80 backdrop-blur-2xl border-t border-white/5 pb-safe">
+      <div class="max-w-lg mx-auto flex justify-around items-center h-20 relative px-2">
 
-      <NuxtLink to="/" class="nav-item" active-class="active">
-        <span class="icon">📊</span>
-        <span class="label">Stats</span>
-      </NuxtLink>
-
-      <div class="center-button-wrapper">
-        <NuxtLink to="/search" class="center-button">
-          <span class="plus-icon">+</span>
+        <NuxtLink to="/" class="nav-link group" active-class="text-blue-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition-transform group-active:scale-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="nav-label">Inicio</span>
         </NuxtLink>
+
+        <NuxtLink to="/" class="nav-link group" active-class="text-blue-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition-transform group-active:scale-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span class="nav-label">Stats</span>
+        </NuxtLink>
+
+        <div class="relative flex justify-center w-16 -translate-y-5">
+          <NuxtLink
+              to="/search"
+              class="w-14 h-14 bg-white text-slate-950 rounded-full flex items-center justify-center shadow-2xl shadow-white/10 border-4 border-slate-950 transition-all hover:scale-110 active:scale-90 group"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 transition-transform duration-300 group-hover:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </NuxtLink>
+        </div>
+
+        <NuxtLink to="/list/deseados" class="nav-link group" active-class="text-blue-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition-transform group-active:scale-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="nav-label">Deseados</span>
+        </NuxtLink>
+
+        <NuxtLink to="/profile" class="nav-link group" active-class="text-blue-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition-transform group-active:scale-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="nav-label">Perfil</span>
+        </NuxtLink>
+
       </div>
-
-      <NuxtLink to="/" class="nav-item" active-class="active">
-        <span class="icon">⭐</span>
-        <span class="label">Deseados</span>
-      </NuxtLink>
-
-      <NuxtLink to="/profile" class="nav-item" active-class="active">
-        <span class="icon">👤</span>
-        <span class="label">Perfil</span>
-      </NuxtLink>
     </div>
   </nav>
 </template>
 
 <style scoped>
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--card-bg);
-  height: 70px;
-  display: flex;
-  align-items: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: env(safe-area-inset-bottom); /* Para iPhone con notch */
-  z-index: 1000;
+.nav-link {
+  @apply flex flex-col items-center justify-center flex-1 text-slate-400 transition-all duration-300 ease-out;
 }
 
-.nav-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  position: relative;
+.nav-label {
+  @apply text-[9px] font-black uppercase tracking-[0.1em] mt-1.5 transition-colors;
 }
 
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  transition: color 0.3s;
-  flex: 1;
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
-.nav-item.active {
-  color: var(--bg-color);
-}
-
-.icon {
-  font-size: 1.4rem;
-  margin-bottom: 4px;
-}
-
-/* Estilos del botón central flotante */
-.center-button-wrapper {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  margin-top: -40px; /* Sube el botón por encima de la barra */
-}
-
-.center-button {
-  width: 56px;
-  height: 56px;
-  background: linear-gradient(135deg, var(--bg-color), #6366f1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-  border: 4px solid var(--bg-color); /* Crea el efecto de "corte" en la barra */
-  transition: transform 0.2s;
-}
-
-.center-button:active {
-  transform: scale(0.9);
-}
-
-.plus-icon {
-  font-size: 2rem;
-  font-weight: 300;
-  line-height: 1;
+/* El link activo ahora también cambia el color del trazo del SVG */
+.router-link-active svg {
+  @apply text-blue-500;
 }
 </style>

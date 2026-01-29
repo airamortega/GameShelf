@@ -1,29 +1,83 @@
 <template>
-  <div class="auth-container">
-    <h1>Crear Cuenta</h1>
-    <form @submit.prevent="handleRegister">
-      <div>
-        <label>Email:</label>
-        <input v-model="email" type="email" placeholder="tu@email.com" required />
-      </div>
-      <div>
-        <label>Contraseña:</label>
-        <input v-model="password" type="password" placeholder="Mínimo 6 caracteres" required />
-      </div>
-      <button type="submit" :disabled="loading">
-        {{ loading ? 'Creando cuenta...' : 'Registrarse' }}
-      </button>
-    </form>
+  <div class="min-h-screen flex flex-col justify-center px-6 bg-slate-950">
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
+      <div class="absolute -top-[10%] -left-[10%] w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px]"></div>
+      <div class="absolute -bottom-[10%] -right-[10%] w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px]"></div>
+    </div>
 
-    <p v-if="errorMsg" style="color: red;">{{ errorMsg }}</p>
-    <p v-if="successMsg" style="color: green;">{{ successMsg }}</p>
+    <div class="max-w-sm mx-auto w-full space-y-10">
+      <header class="text-center space-y-2">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-2xl shadow-blue-500/20 -rotate-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+        </div>
+        <h1 class="text-4xl font-black tracking-tighter text-white uppercase">Únete</h1>
+        <p class="text-gray-500 font-medium">Comienza tu colección en GAMESHELF</p>
+      </header>
 
-    <hr />
-    <p>¿Ya tienes cuenta? <NuxtLink to="/login">Inicia sesión</NuxtLink></p>
+      <form @submit.prevent="handleRegister" class="space-y-4">
+        <div class="space-y-4">
+          <div class="space-y-1">
+            <label class="text-[10px] uppercase font-black text-gray-500 ml-4 tracking-widest">Email</label>
+            <input
+                v-model="email"
+                type="email"
+                placeholder="tu@email.com"
+                required
+                class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all"
+            />
+          </div>
+          <div class="space-y-1">
+            <label class="text-[10px] uppercase font-black text-gray-500 ml-4 tracking-widest">Contraseña</label>
+            <input
+                v-model="password"
+                type="password"
+                placeholder="Mínimo 6 caracteres"
+                required
+                class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all"
+            />
+          </div>
+        </div>
+
+        <button
+            type="submit"
+            :disabled="loading"
+            class="w-full py-4 bg-blue-600 text-white font-black uppercase tracking-widest rounded-2xl hover:bg-blue-500 active:scale-[0.98] transition-all shadow-xl shadow-blue-600/20 disabled:opacity-50 mt-4"
+        >
+          {{ loading ? 'Creando cuenta...' : 'Crear Cuenta' }}
+        </button>
+      </form>
+
+      <div class="space-y-3">
+        <Transition name="fade">
+          <p v-if="errorMsg" class="text-center text-red-400 text-xs font-bold bg-red-400/10 py-3 rounded-xl border border-red-400/20">
+            {{ errorMsg }}
+          </p>
+        </Transition>
+        <Transition name="fade">
+          <p v-if="successMsg" class="text-center text-green-400 text-xs font-bold bg-green-400/10 py-3 rounded-xl border border-green-400/20">
+            {{ successMsg }}
+          </p>
+        </Transition>
+      </div>
+
+      <footer class="text-center pt-4">
+        <p class="text-gray-500 text-sm font-medium">
+          ¿Ya tienes cuenta?
+          <NuxtLink to="/login" class="text-white font-bold hover:text-blue-400 transition-colors ml-1">
+            Inicia sesión
+          </NuxtLink>
+        </p>
+      </footer>
+    </div>
   </div>
 </template>
 
 <script setup>
+
+definePageMeta({
+  layout: 'auth'
+})
+
 const supabase = useSupabaseClient()
 const email = ref('')
 const password = ref('')
@@ -57,54 +111,5 @@ const handleRegister = async () => {
 </script>
 
 <style scoped>
-.auth-container {
-  padding: 2rem 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
 
-h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-input {
-  background: var(--card-bg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  padding: 1rem;
-  border-radius: var(--radius);
-  font-size: 1rem;
-  transition: border-color 0.2s;
-}
-
-input:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #000;
-  border: none;
-  padding: 1rem;
-  border-radius: var(--radius);
-  font-weight: 700;
-  font-size: 1rem;
-  margin-top: 1rem;
-}
-
-.text-link {
-  color: var(--text-muted);
-  text-align: center;
-  font-size: 0.9rem;
-}
 </style>

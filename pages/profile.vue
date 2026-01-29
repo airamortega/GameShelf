@@ -1,55 +1,92 @@
 <template>
-  <div class="profile-page" v-if="user">
-    <header class="header">
-      <h1>Perfil</h1>
+  <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen" v-if="user">
+    <header class="mb-8">
+      <h1 class="text-3xl font-extrabold tracking-tight text-white">Perfil</h1>
     </header>
 
-    <section class="profile-header-card" @click="isEditing = true" :class="{ 'is-clickable': !isEditing }">
-      <div class="avatar-circle">
-        <img v-if="profile?.avatar_url" :src="profile.avatar_url" alt="Avatar" />
-        <span v-else>{{ user?.email?.charAt(0).toUpperCase() }}</span>
+    <section @click="isEditing = true"
+        class="flex items-center gap-5 bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/10 transition-all duration-300"
+        :class="{ ' hover:bg-white/10 active:scale-[0.98]': !isEditing }"
+    >
+      <div class="relative w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg shadow-blue-500/20 overflow-hidden border-2 border-white/10">
+        <img v-if="profile?.avatar_url" :src="profile.avatar_url" class="object-cover w-full h-full" />
+        <span v-else class="text-white">{{ profile?.username?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() }}</span>
       </div>
-      <div class="user-info-basic">
-        <h2>{{ profile?.username || 'Username' }}</h2>
-        <p class="role-badge">Toca para editar perfil</p>
+
+      <div class="flex-1">
+        <h2 class="text-xl font-bold text-white leading-tight">
+          {{ profile?.username || '' }}
+        </h2>
+        <p class="text-sm text-gray-400 font-medium">
+          {{ isEditing ? 'Editando información...' : 'Toca para editar perfil' }}
+        </p>
       </div>
     </section>
 
-    <template v-if="isEditing">
-      <section class="info-section">
-        <h3 class="section-title">Editando</h3>
-        <div class="info-list">
-          <div class="edit-group">
-            <span class="label">Usuario</span>
-            <input class="value" v-model="tempUsername" type="text" placeholder="Escribe tu username..." />
+    <Transition name="fade-slide">
+      <section v-if="isEditing" class="mt-8 space-y-4">
+        <h3 class="text-xs uppercase tracking-widest text-blue-400 font-bold ml-2">Configuración</h3>
+
+        <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden">
+          <div class="p-5 space-y-4">
+            <div class="space-y-2">
+              <label class="text-[10px] uppercase font-black text-gray-500 tracking-tighter">Nombre de Usuario</label>
+              <input
+                  v-model="tempUsername"
+                  type="text"
+                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                  placeholder="Escribe tu username..."
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="text-[10px] uppercase font-black text-gray-500 tracking-tighter">URL Avatar</label>
+              <input
+                  v-model="tempAvatarUrl"
+                  type="text"
+                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                  placeholder="https://..."
+              />
+            </div>
           </div>
-          <div class="edit-actions">
-            <button @click="cancelEdit" class="btn-cancel">Cancelar</button>
-            <button @click="saveProfile" class="btn-save" :disabled="loading">
-              {{ loading ? 'Guardando...' : 'Guardar cambios' }}
+
+          <div class="p-4 flex gap-3 bg-white/[0.02] border-t border-white/5">
+            <button @click="cancelEdit" class="flex-1 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-semibold transition-colors">
+              Cancelar
+            </button>
+            <button
+                @click="saveProfile"
+                :disabled="loading"
+                class="flex-1 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold shadow-lg shadow-blue-600/20 transition-all disabled:opacity-50"
+            >
+              {{ loading ? 'Guardando...' : 'Guardar' }}
             </button>
           </div>
         </div>
       </section>
-    </template>
+    </Transition>
 
-    <section class="info-section">
-      <h3 class="section-title">Información del usuario</h3>
-
-      <div class="info-list">
-        <div class="info-item">
-          <span class="label">Email</span>
-          <span class="value">{{ user?.email }}</span>
+    <section class="mt-10">
+      <h3 class="text-xs uppercase tracking-widest text-blue-400 font-bold ml-2 mb-3">Información de cuenta</h3>
+      <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 divide-y divide-white/5 overflow-hidden">
+        <div class="p-4 flex justify-between items-center">
+          <span class="text-gray-400 text-sm">Email</span>
+          <span class="text-white font-medium text-sm">{{ user?.email }}</span>
         </div>
-        <div class="info-item">
-          <span class="label">Última sesión</span>
-          <span class="value">{{ formatDate(user?.last_sign_in_at) }}</span>
+        <div class="p-4 flex justify-between items-center">
+          <span class="text-gray-400 text-sm">Última sesión</span>
+          <span class="text-white font-medium text-sm">{{ formatDate(user?.last_sign_in_at) }}</span>
         </div>
       </div>
     </section>
 
-    <section class="actions-section" v-if="!isEditing">
-      <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
+    <section class="mt-10" v-if="!isEditing">
+      <button
+          @click="handleLogout"
+          class="w-full py-4 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-500 font-bold border border-red-500/20 transition-all active:scale-[0.97]"
+      >
+        Cerrar Sesión
+      </button>
+      <p class="text-center text-[10px] text-gray-600 mt-8 uppercase tracking-[0.2em]">GameShelf v1.0.0</p>
     </section>
   </div>
 </template>
@@ -57,6 +94,8 @@
 <script setup>
 const user = useSupabaseUser()
 const client = useSupabaseClient()
+
+const profile = ref(null)
 
 // Estados de edición
 const isEditing = ref(false)
@@ -69,7 +108,7 @@ const fetchProfile = async () => {
   const { data } = await client
       .from('profiles')
       .select('*')
-      .eq('id', user.value.id)
+      .eq('id', user.value.sub)
       .single()
 
   if (data) {
@@ -86,7 +125,7 @@ const saveProfile = async () => {
     const { error } = await client
         .from('profiles')
         .upsert({
-          id: user.value.id,
+          id: user.value.sub,
           username: tempUsername.value,
           avatar_url: tempAvatarUrl.value,
           updated_at: new Date()
@@ -104,8 +143,6 @@ const saveProfile = async () => {
   }
 }
 
-onMounted(() => fetchProfile())
-
 const cancelEdit = () => {
   isEditing.value = false
   tempUsername.value = user.value?.user_metadata?.username || ''
@@ -121,190 +158,23 @@ const formatDate = (dateString) => {
   if (!dateString) return '---'
   return new Date(dateString).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
 }
+
+onMounted(() => fetchProfile())
+
 </script>
 
 <style scoped>
-.profile-page {
-  padding: 1.5rem;
-  max-width: 600px;
-  margin: 0 auto;
+
+.fade-slide-enter-active, .fade-slide-leave-active {
+  transition: all 0.3s ease;
+}
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
-.header h1 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  font-weight: 800;
-}
-
-/* Card Superior (Avatar + Username) */
-.profile-header-card {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background: var(--card-bg);
-  padding: 20px;
-  border-radius: 20px;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.avatar-circle {
-  width: 70px;
-  height: 70px;
-  background: var(--bg-color);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: white;
-  overflow: hidden;
-}
-
-.avatar-circle img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.user-info-basic h2 {
-  margin: 0;
-  font-size: 1.3rem;
-}
-
-.role-badge {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-/* Sección de Lista de Información */
-.section-title {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
-
-.info-list {
-  background: var(--card-bg);
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.info-item:last-child { border-bottom: none; }
-
-.info-item .label, .edit-group .label {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
-.info-item .value {
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.code { font-family: monospace; }
-
-/* Botón Logout */
-.actions-section {
-  margin-top: 2.5rem;
-}
-
-.btn-logout {
-  width: 100%;
-  padding: 16px;
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-  border: none;
-  border-radius: 16px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-logout:active {
-  background: rgba(239, 68, 68, 0.2);
-}
-
-.is-clickable { cursor: pointer; }
-.profile-header-card:hover.is-clickable { background: rgba(255,255,255,0.08); }
-
-.edit-badge {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: var(--bg-color);
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--card-bg);
-}
-
-.edit-group {
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  justify-content: space-between;
-}
-
-.edit-group label {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--bg-color);
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-.edit-group input {
-  background: transparent;
-  border: none;
-  color: white;
-  outline: none;
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-align: end;
-}
-
-.edit-actions {
-  display: flex;
-  padding: 16px;
-  gap: 12px;
-}
-
-.btn-save, .btn-cancel {
-  flex: 1;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-save {
-  background: var(--bg-color); color: white;
-}
-.btn-cancel {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-}
-
-.btn-save:disabled { opacity: 0.5; }
 </style>

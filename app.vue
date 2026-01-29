@@ -1,10 +1,7 @@
 <template>
-  <div class="app-layout">
-    <AppNavbar />
-    <main class="container">
-      <NuxtPage />
-    </main>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
 
 <style>

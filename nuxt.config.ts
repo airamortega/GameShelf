@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxtjs/supabase'],
+  modules: ['@nuxtjs/supabase', '@nuxtjs/tailwindcss'],
 
   supabase: {
     url: process.env.SUPABASE_URL,
