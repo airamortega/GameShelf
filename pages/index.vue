@@ -16,10 +16,7 @@
             class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner transition-transform group-hover:scale-110"
             :style="{ backgroundColor: info.color + '22', color: info.color }"
         >
-          <span v-if="status === GameStatus.PENDIENTE">⏳</span>
-          <span v-else-if="status === GameStatus.JUGANDO">🎮</span>
-          <span v-else-if="status === GameStatus.TERMINADO">✅</span>
-          <span v-else>🌑</span>
+          <span v-html="info.icon"></span>
         </div>
 
         <div class="flex-1 ml-4">
@@ -39,16 +36,6 @@
         </div>
       </NuxtLink>
     </div>
-
-    <div class="mt-8 px-2">
-      <NuxtLink
-          to="/search"
-          class="flex items-center justify-center gap-2 w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/20 transition-all active:scale-95"
-      >
-        <span>+</span>
-        Añadir nuevo juego
-      </NuxtLink>
-    </div>
   </div>
 </template>
 
@@ -60,7 +47,7 @@
   const client = useSupabaseClient()
 
   const { data: { session } } = await client.auth.getSession()
-  const userId = session?.user?.id
+  const userId = session?.user?.sub
 
   const query = ref('')
   const results = ref([])
@@ -180,19 +167,5 @@
 
 <style scoped>
 
-.divide-y > * {
-  margin-left: 0;
-}
-
-.library-dashboard::before {
-  content: "";
-  position: fixed;
-  top: -10%;
-  right: -10%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
-  z-index: -1;
-}
 
 </style>

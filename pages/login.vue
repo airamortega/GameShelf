@@ -41,11 +41,22 @@
         </button>
       </form>
 
-      <div class="h-12"> <Transition name="fade">
-        <p v-if="errorMsg" class="text-center text-red-400 text-[11px] font-bold bg-red-400/10 py-3 rounded-xl border border-red-400/20 uppercase tracking-wider">
-          {{ errorMsg }}
-        </p>
+      <Transition name="fade">
+        <div v-if="errorMsg" class="h-12">
+
+            <p class="text-center text-red-400 text-[11px] font-bold bg-red-400/10 py-3 rounded-xl border border-red-400/20 uppercase tracking-wider">
+              {{ errorMsg }}
+            </p>
+        </div>
       </Transition>
+
+      <div class="text-center pt-4">
+        <p class="text-gray-500 text-sm font-medium">
+          ¿No tienes cuenta?
+          <NuxtLink to="/register" class="text-white font-bold hover:text-blue-400 transition-colors ml-1">
+            Registrate
+          </NuxtLink>
+        </p>
       </div>
 
       <footer class="text-center">

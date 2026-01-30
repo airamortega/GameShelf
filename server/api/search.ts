@@ -1,6 +1,10 @@
 export default defineEventHandler(async (event) => {
-    const { q } = getQuery(event)
+    const body = await readBody(event);
     const config = useRuntimeConfig()
+
+    const searchTerm = body?.query || "";
+
+    if (!searchTerm) return [];
 
     // 1. Obtener Token de Twitch
     const auth: any = await $fetch('https://id.twitch.tv/oauth2/token', {
@@ -21,11 +25,14 @@ export default defineEventHandler(async (event) => {
             'Authorization': `Bearer ${auth.access_token}`
         },
         body: `
-      search "${q}";
-      fields name, cover.url, first_release_date;
-      limit 12;
-    `
-    })
+          search "${searchTerm}";
+          fields name, summary, cover.url, genres.name, 
+                 involved_companies.company.name, platforms.name, 
+                 first_release_date, total_rating;
+          where version_parent = null; 
+          limit 20;
+        `,
+    });
 
     return games
 })

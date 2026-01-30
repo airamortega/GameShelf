@@ -30,14 +30,14 @@
         <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden">
           <div class="p-5 space-y-4">
             <div class="space-y-2">
-              <label class="text-[10px] uppercase font-black text-gray-500 tracking-tighter">Nombre de Usuario</label>
               <input
                   v-model="tempUsername"
                   type="text"
-                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
-                  placeholder="Escribe tu username..."
+                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-gray-400 placeholder:text-sm"
+                  placeholder="Nombre de Usuario"
               />
             </div>
+            <!--
             <div class="space-y-2">
               <label class="text-[10px] uppercase font-black text-gray-500 tracking-tighter">URL Avatar</label>
               <input
@@ -47,7 +47,8 @@
                   placeholder="https://..."
               />
             </div>
-          </div>
+            -->
+            </div>
 
           <div class="p-4 flex gap-3 bg-white/[0.02] border-t border-white/5">
             <button @click="cancelEdit" class="flex-1 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-semibold transition-colors">
@@ -71,10 +72,6 @@
         <div class="p-4 flex justify-between items-center">
           <span class="text-gray-400 text-sm">Email</span>
           <span class="text-white font-medium text-sm">{{ user?.email }}</span>
-        </div>
-        <div class="p-4 flex justify-between items-center">
-          <span class="text-gray-400 text-sm">Última sesión</span>
-          <span class="text-white font-medium text-sm">{{ formatDate(user?.last_sign_in_at) }}</span>
         </div>
       </div>
     </section>
