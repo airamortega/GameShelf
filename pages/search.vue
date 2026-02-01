@@ -67,14 +67,17 @@
 
             <div class="space-y-4">
               <h4 class="text-xs font-black uppercase tracking-[0.2em] text-blue-500">Tu Biblioteca</h4>
-              <div class="grid grid-cols-5 gap-3">
+              <div class="grid grid-cols-6 gap-2">
                 <button
                     v-for="(info, key) in GameStatusLabels" :key="key"
                     @click="toggleStatus(key)"
-                    :style="{backgroundColor: info.color + '22', color: info.color}"
+                    :style="{backgroundColor: info.color + '22',
+                      color: info.color,
+                      borderColor: tempStatus.includes(key) ? info.color : ''
+                    }"
                     :class="[
-                    'flex items-center gap-3 p-4 rounded-2xl border transition-all duration-300',
-                    tempStatus.includes(key) ? 'bg-blue-600 border-blue-400 text-white' : 'bg-white/5 border-white/5 text-gray-500'
+                    'flex items-center justify-center aspect-square rounded-2xl border transition-all duration-300',
+                    tempStatus.includes(key) ? '' : 'bg-white/5 border-white/5 text-gray-500'
                   ]"
                 >
                   <span v-html="info.icon" class="text-[10px] font-black uppercase tracking-widest "></span>

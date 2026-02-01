@@ -7,6 +7,32 @@
 
     <div class="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden divide-y divide-white/5 shadow-2xl">
       <NuxtLink
+          :to="`/library`"
+          class="flex items-center p-5 transition-all duration-200 hover:bg-white/[0.07] active:scale-[0.98] group"
+      >
+        <div
+            class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner transition-transform group-hover:scale-110"
+            :style="{ backgroundColor: '#94a3b8' + '22', color: '#94a3b8' }"
+        >
+          <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-library-icon lucide-library w-8 h-8"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg></span>
+        </div>
+
+        <div class="flex-1 ml-4">
+          <h3 class="text-white font-bold text-lg leading-tight uppercase">Todos</h3>
+          <p class="text-gray-500 text-xs font-medium tracking-wider mt-0.5">Colección completa</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="text-xl font-black text-gray-400">
+            {{ counts['total'] || 0 }}
+          </span>
+          <span class="text-2xl text-white/20 group-hover:text-white/40 transition-colors font-light">
+            ›
+          </span>
+        </div>
+      </NuxtLink>
+
+      <NuxtLink
           v-for="(info, status) in GameStatusLabels"
           :key="status"
           :to="`/list/${status}`"
@@ -81,7 +107,6 @@
       })
 
       counts.value = { ...tempCounts }
-      console.log("Counts actualizado en Vue:", counts.value)
     } catch (err) {
       console.error("Error obteniendo conteo de estados:", err)
     } finally {
