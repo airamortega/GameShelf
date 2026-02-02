@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-950 p-6 pb-24">
+  <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen">
     <header class="mb-6 flex items-center gap-4">
       <NuxtLink to="/" class="w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl text-white active:scale-90 transition-all">
         <ChevronLeft class="w-6 h-6" />

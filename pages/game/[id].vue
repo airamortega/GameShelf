@@ -1,6 +1,6 @@
 <template>
-  <div v-if="game" class="min-h-screen bg-slate-950 text-white pb-20">
-    <div class="relative h-[45vh] w-full overflow-hidden">
+  <div v-if="game" class="p-6 max-w-lg mx-auto pb-24 min-h-screen">
+    <div class="relative h-[35vh] w-full overflow-hidden">
       <img
           :src="game.cover_url?.replace('t_thumb', 't_1080p')"
           class="w-full h-full object-cover opacity-30 blur-xl scale-110"
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="px-6 mt-16 space-y-8">
+    <div class="px-6 mt-16 mb-16 space-y-8">
 
       <section v-if="game.summary">
         <h2 class="text-xs font-black uppercase tracking-[0.2em] text-gray-500 mb-3">Sinopsis</h2>
@@ -123,8 +123,11 @@
 
 <script setup>
 import {ChevronLeft, Trash2} from 'lucide-vue-next'
+const { showToast } = useToast()
 
 const route = useRoute()
+const router = useRouter()
+
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
@@ -170,8 +173,9 @@ const updateStatus = async () => {
         })
 
     if (error) throw error
-
+    showToast('¡Actualizado!')
   } catch (err) {
+    showToast('Error al guardar', 'error')
     console.error("Error completo:", err)
   } finally {
     loading.value = false
@@ -198,7 +202,15 @@ const removeFromLibrary = async () => {
     showDeleteDialog.value = false
     game.value = null
 
+    showToast('¡Eliminado!', 'success')
+
+    setTimeout(() => {
+      const prevStatus = route.query.from
+      router.push(prevStatus ? '/list/'+ prevStatus :'/library')
+    }, 500)
+
   } catch (err) {
+    showToast('¡Error al eliminar!', 'error')
     console.error("Error al eliminar:", err)
   } finally {
     loading.value = false

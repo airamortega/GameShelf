@@ -1,8 +1,12 @@
 <template>
   <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen" v-if="user">
-    <header class="mb-8">
-      <h1 class="text-3xl font-extrabold tracking-tight text-white">Perfil</h1>
+    <header class="mb-10 mt-4">
+      <h1 class="text-4xl font-black tracking-tight text-white">Perfil</h1>
     </header>
+
+    <div v-if="loading" class="flex items-center justify-center min-h-screen">
+      <AppSpinner />
+    </div>
 
     <section @click="isEditing = true"
         class="flex items-center gap-5 bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/10 transition-all duration-300"
@@ -66,7 +70,7 @@
       </section>
     </Transition>
 
-    <section class="mt-10">
+    <section class="mt-10" >
       <h3 class="text-xs uppercase tracking-widest text-blue-400 font-bold ml-2 mb-3">Información de cuenta</h3>
       <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 divide-y divide-white/5 overflow-hidden">
         <div class="p-4 flex justify-between items-center">
@@ -96,7 +100,7 @@ const profile = ref(null)
 
 // Estados de edición
 const isEditing = ref(false)
-const loading = ref(false)
+const loading = ref(true)
 const tempUsername = ref(user.value?.user_metadata?.username || '')
 const tempAvatarUrl = ref(user.value?.user_metadata?.avatar_url || '')
 
@@ -113,6 +117,8 @@ const fetchProfile = async () => {
     tempUsername.value = data.username || ''
     tempAvatarUrl.value = data.avatar_url || ''
   }
+
+  loading.value = false
 }
 
 const saveProfile = async () => {
@@ -149,11 +155,6 @@ const cancelEdit = () => {
 const handleLogout = async () => {
   await client.auth.signOut()
   navigateTo('/login')
-}
-
-const formatDate = (dateString) => {
-  if (!dateString) return '---'
-  return new Date(dateString).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 onMounted(() => fetchProfile())

@@ -159,6 +159,8 @@ import { Trash2, RefreshCw, Plus } from 'lucide-vue-next'
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
+const { showToast } = useToast()
+
 const searchQuery = ref('')
 const searchResults = ref([])
 
@@ -303,8 +305,15 @@ const saveToLibrary = async () => {
 
     if (libError) throw libError
 
+    if(isAlreadyInLibrary){
+      showToast('¡Actualizado!')
+    }else{
+      showToast('¡Añadido!')
+    }
+
     selectedGame.value = null
   } catch (err) {
+    showToast('Error al guardar', 'error')
     console.error("Error en el guardado:", err)
   } finally {
     loading.value = false
@@ -333,7 +342,10 @@ const removeFromLibrary = async () => {
     isAlreadyInLibrary.value = false
     tempStatus.value = []
 
+    showToast('¡Eliminado!')
+
   } catch (err) {
+    showToast('¡Error al eliminar!', 'error')
     console.error("Error al eliminar:", err)
   } finally {
     loading.value = false
@@ -365,7 +377,6 @@ const isInvalidSelection = computed(() => {
 
   return hasEmpty || hasConflict
 })
-
 
 </script>
 

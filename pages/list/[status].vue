@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-slate-950 p-6 pb-24">
+  <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen">
     <header class="mb-6 flex items-center gap-4">
-      <NuxtLink to="/library" class="w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl text-white active:scale-90 transition-all">
+      <NuxtLink to="/" class="w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl text-white active:scale-90 transition-all">
         <ChevronLeft class="w-6 h-6" />
       </NuxtLink>
       <div>
@@ -31,7 +31,7 @@
       <NuxtLink
           v-for="item in filteredGames"
           :key="item.games.id"
-          :to="`/game/${item.games.id}`"
+          :to="`/game/${item.games.id}?from=${status}`"
           class="group relative aspect-[3/4] rounded-[24px] overflow-hidden border border-white/10 bg-slate-900 shadow-2xl active:scale-95 transition-all duration-300"
       >
         <img

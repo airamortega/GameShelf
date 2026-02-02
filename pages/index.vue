@@ -5,6 +5,10 @@
       <p class="text-gray-500 mt-1 font-medium">Gestiona tu colección de juegos</p>
     </header>
 
+    <div v-if="isLoading" class="flex items-center justify-center min-h-screen">
+      <AppSpinner />
+    </div>
+
     <div class="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden divide-y divide-white/5 shadow-2xl">
       <NuxtLink
           :to="`/library`"
@@ -76,6 +80,7 @@
     terminado: 0,
     platino: 0,
     abandonado: 0,
+    deseados: 0
   })
   const isLoading = ref(true)
 
@@ -92,7 +97,7 @@
       if (error) throw error
 
       // Reiniciamos contadores
-      const tempCounts = { total: data.length, jugando: 0, terminado: 0, platino: 0, abandonado: 0, pendiente: 0 }
+      const tempCounts = { total: data.length, deseados: 0, jugando: 0, terminado: 0, platino: 0, abandonado: 0, pendiente: 0 }
 
       // Procesamos cada juego
       data.forEach(item => {
