@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <NuxtPage />
+    <NuxtPage :keepalive="{ include: 'search' }"/>
   </NuxtLayout>
 </template>
 

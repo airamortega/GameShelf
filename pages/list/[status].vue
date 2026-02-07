@@ -35,10 +35,12 @@
           class="group relative aspect-[3/4] rounded-[24px] overflow-hidden border border-white/10 bg-slate-900 shadow-2xl active:scale-95 transition-all duration-300"
       >
         <img
-            :src="item.games.cover_url?.replace('t_thumb', 't_cover_big')"
+            :src="item.games.cover?.replace('t_thumb', 't_cover_big')"
             :alt="item.games.name"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
+
+        <gameRating :rating="item.games.total_rating" />
 
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity"></div>
 
@@ -95,7 +97,7 @@ const fetchGamesByStatus = async () => {
         .from('user_library')
         .select(`
           status,
-          games (id, name,cover_url)
+          games (id, name, cover, total_rating)
         `)
         .eq('user_id', user.value.sub)
         .contains('status', [status]) // Filtramos en el array de Supabase

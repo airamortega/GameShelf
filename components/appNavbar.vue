@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <nav class="fixed bottom-0 left-0 right-0 z-50">
+  <nav class="fixed -bottom-1 left-0 right-0 z-50">
     <div class="bg-slate-950/80 backdrop-blur-2xl border-t border-white/5 pb-safe">
       <div class="max-w-lg mx-auto flex justify-around items-center h-20 relative px-2">
 
