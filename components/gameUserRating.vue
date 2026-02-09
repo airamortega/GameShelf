@@ -2,7 +2,7 @@
   <div class="bg-white/5 border border-white/5 rounded-2xl p-6 shadow-xl flex flex-col items-center gap-3">
 
     <div v-if="userRating !== null"
-         :class="getRatingColor"
+         :class="getRatingColors"
          class="w-[70px] h-[60px] rounded-lg flex items-center justify-center font-black text-xl shadow-lg transition-colors">
       {{ Number(userRating).toFixed(2) }}
     </div>
@@ -48,8 +48,11 @@
 </template>
 
 <script setup>
-import {Trash2 } from 'lucide-vue-next'
+import {Trash2} from 'lucide-vue-next'
 import {computed} from "vue";
+const { showToast } = useToast()
+
+const { getRatingClasses } = useRatingColors();
 
 const props = defineProps(['gameId']);
 const supabase = useSupabaseClient();
@@ -58,21 +61,8 @@ const user = useSupabaseUser();
 const userRating = ref(null);
 const tempRating = ref(0);
 
-const getRatingColor = computed(() => {
-  const r = userRating.value * 10;
-
-  if (!r) return 'bg-gray-500 text-white';
-
-  if (r >= 90) return 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/50';
-  if (r >= 80) return 'bg-green-500 text-white';
-  if (r >= 70) return 'bg-lime-500 text-black';
-  if (r >= 60) return 'bg-yellow-400 text-black';
-  if (r >= 50) return 'bg-yellow-600 text-white';
-  if (r >= 40) return 'bg-orange-400 text-black';
-  if (r >= 30) return 'bg-orange-600 text-white';
-  if (r >= 20) return 'bg-red-500 text-white';
-  if (r >= 10) return 'bg-red-700 text-white';
-  return 'bg-red-900 text-white';
+const getRatingColors = computed(() => {
+  return getRatingClasses(userRating.value * 10)
 });
 
 const fetchUserVote = async () => {
@@ -96,10 +86,12 @@ const submitVote = async () => {
     .upsert({
       user_id: user.value.sub,
       game_id: props.gameId,
-      rating: parseInt(tempRating.value)
+      rating: tempRating.value
     });
 
   if (!error) userRating.value = tempRating.value;
+
+  showToast("¡Votado!")
 };
 
 const deleteVote = async () => {
@@ -128,12 +120,6 @@ const sliderStyle = computed(() => {
     backgroundColor: '#262626'
   };
 });
-
-const getTextColor = (score) => {
-  if (score >= 75) return 'text-emerald-500';
-  if (score >= 50) return 'text-yellow-500';
-  return 'text-red-500';
-};
 
 onMounted(fetchUserVote);
 watch(user, fetchUserVote);
