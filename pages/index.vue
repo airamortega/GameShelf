@@ -1,8 +1,13 @@
 <template>
   <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen">
-    <header class="mb-10 mt-4">
-      <h1 class="text-4xl font-black tracking-tight text-white">Mi Biblioteca</h1>
-      <p class="text-gray-500 mt-1 font-medium">Gestiona tu colección de juegos</p>
+    <header class="flex items-center mb-10 mt-4">
+      <div>
+        <h1 class="text-4xl font-black tracking-tight text-white">Mi Biblioteca</h1>
+        <p class="text-gray-500 mt-1 font-medium">Gestiona tu colección de juegos</p>
+      </div>
+      <NuxtLink to="/shuffle" class="ml-auto w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl text-white active:scale-90 transition-all">
+        <Dices class="w-6 h-6" />
+      </NuxtLink>
     </header>
 
     <div v-if="isLoading" class="flex items-center justify-center min-h-screen">
@@ -69,6 +74,7 @@
 
 <script setup>
   import { ref } from 'vue'
+  import {Dices} from "lucide-vue-next";
 
   const user = useSupabaseUser()
   const supabase = useSupabaseClient()
