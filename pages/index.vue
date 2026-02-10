@@ -44,7 +44,7 @@
       <NuxtLink
           v-for="(info, status) in GameStatusLabels"
           :key="status"
-          :to="`/list/${status}`"
+          :to="`/game/${status}`"
           class="flex items-center p-5 transition-all duration-200 hover:bg-white/[0.07] active:scale-[0.98] group"
       >
         <div

@@ -16,6 +16,14 @@
         <ChevronLeft class="w-6 h-6" />
       </button>
 
+      <button
+          v-if="game"
+          @click="showAddToListModal = true"
+          class="absolute top-6 right-6 z-20 w-10 h-10 flex items-center justify-center bg-black/20 backdrop-blur-md rounded-xl border border-white/10"
+      >
+        <PlusCircle :size="20" />
+      </button>
+
       <div class="absolute bottom-0 left-0 w-full p-6 flex items-end gap-6 translate-y-6">
         <div class="w-32 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex-shrink-0 relative">
           <img :src="game_cover_big" class="w-32 rounded-2xl shadow-2xl" />
@@ -35,7 +43,7 @@
       </div>
     </div>
 
-    <div v-if="game" class="px-6 mt-16 mb-16 space-y-8">
+    <div class="px-6 mt-16 mb-16 space-y-8">
 
       <section>
         <h4 class="text-s font-black uppercase tracking-[0.2em] text-gray-500 mb-3">Tu Biblioteca</h4>
@@ -93,12 +101,19 @@
       </section>
 
     </div>
-  </div>
 
+    <AddToListModal
+        v-model="showAddToListModal"
+        :game-id="game.id"
+        :game-name="game.name"
+    />
+
+  </div>
 </template>
 
 <script setup>
-import {ChevronLeft} from 'lucide-vue-next'
+import {ChevronLeft, FolderPlus, PlusCircle} from 'lucide-vue-next'
+import AddToListModal from "~/components/addToListModal.vue";
 
 const route = useRoute()
 
@@ -115,6 +130,8 @@ const loading = ref(false)
 
 const isAlreadyInBD = ref(false)
 const isAlreadyInLibrary = ref(false)
+
+const showAddToListModal = ref(false)
 
 let timeout = null
 
