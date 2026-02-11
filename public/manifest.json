@@ -1,6 +1,6 @@
 {
-  "name": "Game Tracker Pro",
-  "short_name": "GameTracker",
+  "name": "GameShelf",
+  "short_name": "GameShelf",
   "description": "Mi biblioteca personal de juegos",
   "start_url": "/",
   "display": "standalone",
