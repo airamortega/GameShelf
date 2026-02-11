@@ -21,7 +21,7 @@
                   v-model="form.name"
                   type="text"
                   required
-                  class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-emerald-500/50 transition-all"
+                  class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all"
               />
             </div>
 
@@ -30,7 +30,7 @@
                 class="flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-2xl cursor-pointer hover:bg-white/10 transition-all"
             >
               <div class="flex items-center gap-3">
-                <div :class="form.is_public ? 'text-emerald-500' : 'text-gray-500'">
+                <div :class="form.is_public ? 'text-blue-500' : 'text-gray-500'">
                   <Globe v-if="form.is_public" class="w-5 h-5" />
                   <Lock v-else class="w-5 h-5" />
                 </div>
@@ -40,10 +40,10 @@
                 </div>
               </div>
 
-              <div class="w-10 h-6 rounded-full bg-slate-800 relative transition-all" :class="{'bg-emerald-500/20': form.is_public}">
+              <div class="w-10 h-6 rounded-full bg-slate-800 relative transition-all" :class="{'bg-blue-500/20': form.is_public}">
                 <div
                     class="absolute top-1 w-4 h-4 rounded-full transition-all duration-300"
-                    :class="form.is_public ? 'right-1 bg-emerald-500' : 'left-1 bg-gray-600'"
+                    :class="form.is_public ? 'right-1 bg-blue-500' : 'left-1 bg-gray-600'"
                 ></div>
               </div>
             </div>

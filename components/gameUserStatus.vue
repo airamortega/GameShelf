@@ -277,7 +277,7 @@ const removeFromLibrary = async () => {
       if("SEARCH" === prevStatus){
         router.push('/search')
       } else {
-        router.push(prevStatus ? '/game/'+ prevStatus :'/library')
+        router.push(prevStatus ? '/game/status/'+ prevStatus :'/library')
       }
     }, 500)
 

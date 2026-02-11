@@ -4,6 +4,14 @@
       <NuxtLink to="/" class="w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl text-white active:scale-90 transition-all">
         <ChevronLeft class="w-6 h-6" />
       </NuxtLink>
+
+      <div
+          class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner transition-transform group-hover:scale-110"
+          :style="{ backgroundColor: '#94a3b8' + '22', color: '#94a3b8' }"
+      >
+        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-library-icon lucide-library w-8 h-8"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg></span>
+      </div>
+
       <div>
         <h1 class="text-3xl font-black text-white uppercase tracking-tighter italic">TODOS</h1>
         <p class="text-gray-500 text-xs font-bold uppercase tracking-widest">{{ filteredGames.length }} Juegos</p>
@@ -57,8 +65,9 @@
       <div class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-4">
         <SearchX class="w-10 h-10 text-gray-600" />
       </div>
-      <h3 class="text-white font-bold uppercase tracking-widest text-sm">Sin coincidencias</h3>
-      <p class="text-gray-500 text-xs mt-2">No encontramos nada que coincida con "{{ searchQuery }}"</p>
+      <h3 class="text-white font-bold uppercase tracking-widest text-sm">Sin resultados</h3>
+      <p v-if="searchQuery" class="text-gray-500 text-xs mt-2">No encontramos nada que coincida con "{{ searchQuery }}"</p>
+      <p v-else class="text-gray-500 text-xs mt-2">No se ha encontrado ningún juego</p>
     </div>
   </div>
 </template>

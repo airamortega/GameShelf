@@ -1,7 +1,10 @@
 <template>
-  <div class="p-6 max-w-4xl mx-auto pb-24 min-h-screen">
+  <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen">
     <header class="flex items-center justify-between mb-10">
-      <h1 class="text-4xl font-black text-white uppercase tracking-tighter italic">Mis Listas</h1>
+      <div>
+        <h1 class="text-4xl font-black text-white uppercase tracking-tighter italic">Mis Listas</h1>
+        <p class="text-slate-500 font-bold uppercase text-xs tracking-widest mt-2">Organiza tus juegos en listas</p>
+      </div>
       <button
           @click="showCreateModal = true"
           class="w-12 h-12 bg-white text-slate-950 rounded-2xl font-bold flex items-center justify-center active:scale-95 transition-all shadow-lg shadow-white/5"
@@ -10,9 +13,8 @@
       </button>
     </header>
 
-    <div v-if="loading" class="flex flex-col items-center justify-center py-20 gap-4">
-      <Loader2 class="w-8 h-8 text-emerald-500 animate-spin" />
-      <span class="text-gray-500 font-bold uppercase tracking-widest text-xs">Cargando listas...</span>
+    <div v-if="loading" >
+      <AppSpinner />
     </div>
 
     <draggable
@@ -21,16 +23,14 @@
         item-key="id"
         handle=".drag-handle"
         ghost-class="opacity-30"
+        :delay="200" :delay-on-touch-only="true"
+        :touch-start-threshold="5"
         @end="saveOrder"
         class="flex flex-col gap-4"
     >
       <template #item="{ element }">
         <div class="relative group">
-          <div class="drag-handle absolute left-[-40px] top-1/2 -translate-y-1/2 p-2 cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 transition-opacity hidden md:block">
-            <GripVertical class="text-slate-600" />
-          </div>
-
-          <ListCard :list="element" />
+          <ListCard :list="element"/>
         </div>
       </template>
     </draggable>

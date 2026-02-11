@@ -1,13 +1,22 @@
 <template>
   <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen">
     <header class="mb-6 flex items-center gap-4">
-      <NuxtLink to="/public" class="w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl text-white active:scale-90 transition-all">
+      <NuxtLink to="/" class="w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl text-white active:scale-90 transition-all">
         <ChevronLeft class="w-6 h-6" />
       </NuxtLink>
+
+      <div
+          class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner transition-transform group-hover:scale-110"
+          :style="{ backgroundColor: statusData.color + '22', color: statusData.color }"
+      >
+        <span v-html="statusData.icon"></span>
+      </div>
+
       <div>
-        <h1 class="text-3xl font-black text-white uppercase tracking-tighter italic">{{ statusLabel }}</h1>
+        <h1 class="text-3xl font-black text-white uppercase tracking-tighter italic">{{ statusData.label }}</h1>
         <p class="text-gray-500 text-xs font-bold uppercase tracking-widest">{{ filteredGames.length }} Juegos</p>
       </div>
+
     </header>
 
     <div class="relative mb-8">
@@ -57,20 +66,21 @@
       <div class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-4">
         <SearchX class="w-10 h-10 text-gray-600" />
       </div>
-      <h3 class="text-white font-bold uppercase tracking-widest text-sm">Sin coincidencias</h3>
-      <p class="text-gray-500 text-xs mt-2">No encontramos nada que coincida con "{{ searchQuery }}"</p>
+      <h3 class="text-white font-bold uppercase tracking-widest text-sm">Sin resultados</h3>
+      <p v-if="searchQuery" class="text-gray-500 text-xs mt-2">No encontramos nada que coincida con "{{ searchQuery }}"</p>
+      <p v-else class="text-gray-500 text-xs mt-2">No se ha encontrado ningún juego</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ChevronLeft, Ghost, Search, X, SearchX } from 'lucide-vue-next'
+import { ChevronLeft, Search, X, SearchX } from 'lucide-vue-next'
 
 const route = useRoute()
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
-const status = route.params.status // 'jugando', 'terminado', etc.
+const status = route.params.status
 const games = ref([])
 const loading = ref(true)
 const searchQuery = ref('')
@@ -86,6 +96,11 @@ const filteredGames = computed(() => {
 })
 
 const statusLabel = computed(() => GameStatus[status] || status)
+
+const statusData = computed(() => {
+  return GameStatusLabels[status] || null;
+});
+
 
 const fetchGamesByStatus = async () => {
   if (!user.value) return

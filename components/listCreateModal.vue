@@ -6,11 +6,11 @@
 
         <div class="relative w-full max-w-sm bg-slate-900 border border-white/10 rounded-[40px] p-8 shadow-2xl overflow-hidden">
 
-          <div class="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-[80px] rounded-full"></div>
+          <div class="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 blur-[80px] rounded-full"></div>
 
           <header class="text-center mb-8">
-            <div class="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <PlusCircle class="w-8 h-8 text-emerald-500" />
+            <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <PlusCircle class="w-8 h-8 text-blue-500" />
             </div>
             <h3 class="text-2xl font-black text-white uppercase italic tracking-tighter">Nueva Lista</h3>
             <p class="text-gray-500 text-sm">Organiza tu colección a tu gusto</p>
@@ -24,7 +24,7 @@
                   type="text"
                   placeholder="Ej: Joyas Ocultas, Backlog 2024..."
                   required
-                  class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-emerald-500/50 transition-all"
+                  class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all"
               />
             </div>
 
@@ -33,7 +33,7 @@
                 class="flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-2xl cursor-pointer hover:bg-white/10 transition-all"
             >
               <div class="flex items-center gap-3">
-                <div :class="form.is_public ? 'text-emerald-500' : 'text-gray-500'">
+                <div :class="form.is_public ? 'text-blue-500' : 'text-gray-500'">
                   <Globe v-if="form.is_public" class="w-5 h-5" />
                   <Lock v-else class="w-5 h-5" />
                 </div>
@@ -43,10 +43,10 @@
                 </div>
               </div>
 
-              <div class="w-10 h-6 rounded-full bg-slate-800 relative transition-all" :class="{'bg-emerald-500/20': form.is_public}">
+              <div class="w-10 h-6 rounded-full bg-slate-800 relative transition-all" :class="{'bg-blue-500/20': form.is_public}">
                 <div
                     class="absolute top-1 w-4 h-4 rounded-full transition-all duration-300"
-                    :class="form.is_public ? 'right-1 bg-emerald-500' : 'left-1 bg-gray-600'"
+                    :class="form.is_public ? 'right-1 bg-blue-500' : 'left-1 bg-gray-600'"
                 ></div>
               </div>
             </div>

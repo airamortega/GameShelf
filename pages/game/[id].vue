@@ -1,6 +1,6 @@
 <template>
 
-  <div v-if="loading" class="flex items-center justify-center min-h-screen">
+  <div v-if="loading">
     <AppSpinner />
   </div>
 
@@ -77,7 +77,7 @@
 
           <div>
             <p class="text-xs uppercase tracking-widest text-gray-500 font-bold">Desarrollador</p>
-            <p class="text-emerald-400 font-medium">{{ developers }}</p>
+            <p class="text-blue-400 font-medium">{{ developers }}</p>
           </div>
 
           <div v-if="game.platforms" class="col-span-2">
@@ -201,10 +201,13 @@ const fetchGameDetails = async () => {
       isAlreadyInLibrary.value = true
     }
 
-    isAlreadyInBD.value = true
+    if (data) {
+      isAlreadyInBD.value = true
 
-    game_cover_big.value = getCoverUrl(game.value.cover)
-    game_cover_1080.value = getCoverUrl(game.value.cover, 't_1080p')
+      game_cover_big.value = getCoverUrl(game.value.cover)
+      game_cover_1080.value = getCoverUrl(game.value.cover, 't_1080p')
+
+    }
 
     loading.value = false
 

@@ -19,14 +19,14 @@
                 :key="list.id"
                 @click="toggleGameInList(list.id)"
                 class="flex items-center justify-between p-4 bg-white/5 rounded-2xl cursor-pointer hover:bg-white/10 transition-all border-2"
-                :class="isGameInList(list.id) ? 'border-emerald-500' : 'border-transparent'"
+                :class="isGameInList(list.id) ? 'border-blue-500' : 'border-transparent'"
             >
               <div class="flex items-center gap-3">
                 <Lock v-if="!list.is_public" class="w-4 h-4 text-gray-500" />
-                <Globe v-else class="w-4 h-4 text-emerald-500" />
+                <Globe v-else class="w-4 h-4 text-blue-500" />
                 <span class="text-sm font-bold text-white">{{ list.name }}</span>
               </div>
-              <input type="checkbox" :checked="isGameInList(list.id)" class="accent-emerald-500" />
+              <input type="checkbox" :checked="isGameInList(list.id)" class="accent-blue-500" />
             </div>
           </div>
 
@@ -34,7 +34,7 @@
             <button
                 @click="saveChanges"
                 :disabled="saving"
-                class="w-full py-5 bg-emerald-500 text-slate-950 font-black uppercase tracking-widest text-xs rounded-2xl active:scale-95 disabled:opacity-50 transition-all flex justify-center items-center gap-2"
+                class="w-full py-5 bg-blue-500 text-slate-950 font-black uppercase tracking-widest text-xs rounded-2xl active:scale-95 disabled:opacity-50 transition-all flex justify-center items-center gap-2"
             >
               <Loader2 v-if="saving" class="w-4 h-4 animate-spin" />
               <span v-else>Confirmar</span>

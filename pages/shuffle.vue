@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen flex flex-col justify-center items-center p-6">
+  <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen flex flex-col justify-center items-center">
     <div class="w-full max-w-lg mx-auto">
       <div class="flex flex-col items-center gap-6 bg-slate-900/50 rounded-[32px] border border-white/5 shadow-2xl py-6">
 
         <div v-if="!isShuffling && !selectedGame" class="text-center space-y-2 ">
           <div class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
-            <Dices class="w-10 h-10 text-emerald-500" />
+            <Dices class="w-10 h-10 text-blue-500" />
           </div>
           <h3 class="text-2xl font-black italic uppercase tracking-tighter">¿A qué jugamos hoy?</h3>
           <p class="text-gray-400 text-sm">Deja que el destino elija por ti entre tus pendientes</p>
@@ -16,7 +16,7 @@
             <div :key="displayGame?.games.id" class="w-full h-full">
               <img
                   :src="getCoverUrl(displayGame?.games.cover)"
-                  class="w-full h-full object-cover rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.3)] border-2 border-emerald-500/50"
+                  class="w-full h-full object-cover rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.3)] border-2 border-blue-500/50"
               />
             </div>
           </Transition>
@@ -25,7 +25,7 @@
         <button
             @click="shuffle"
             :disabled="isShuffling"
-            class="group relative overflow-hidden px-8 py-4 bg-emerald-500 rounded-2xl transition-all active:scale-95 disabled:opacity-50"
+            class="group relative overflow-hidden px-8 py-4 bg-blue-500 rounded-2xl transition-all active:scale-95 disabled:opacity-50"
         >
           <div class="relative z-10 flex items-center gap-3 text-slate-950 font-black uppercase tracking-widest text-sm">
             <Dices v-if="!isShuffling" class="w-5 h-5 animate-bounce" />
@@ -42,11 +42,11 @@
                 <img :src="getCoverUrl(selectedGame.games.cover, 't_1080p')" class="absolute inset-0 w-full h-full object-cover opacity-20 blur-2xl" />
 
                 <div class="relative p-8 flex flex-col items-center text-center">
-                  <div class="w-40 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl mb-6 border-2 border-emerald-500/50">
+                  <div class="w-40 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl mb-6 border-2 border-blue-500/50">
                     <img :src="getCoverUrl(selectedGame.games.cover)" class="w-full h-full object-cover" />
                   </div>
 
-                  <h4 class="text-xs font-black text-emerald-400 uppercase tracking-[0.3em] mb-2">Tu próximo reto es:</h4>
+                  <h4 class="text-xs font-black text-blue-400 uppercase tracking-[0.3em] mb-2">Tu próximo reto es:</h4>
                   <h2 class="text-3xl font-black text-white uppercase italic leading-none mb-8">{{ selectedGame.games.name }}</h2>
 
                   <div class="flex flex-col gap-3 w-full">

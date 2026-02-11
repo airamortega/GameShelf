@@ -24,7 +24,7 @@
 
         <div class="flex justify-between items-center mb-4">
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500 font-bold text-xs">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 font-bold text-xs">
               {{ comment.user_email?.charAt(0).toUpperCase() }}
             </div>
             <div>
@@ -44,10 +44,10 @@
         </div>
 
         <div v-if="editingId === comment.id" class="space-y-3">
-          <textarea v-model="editText" class="w-full bg-black/40 border border-emerald-500/50 rounded-lg p-3 text-white focus:ring-1 focus:ring-emerald-500 outline-none"></textarea>
+          <textarea v-model="editText" class="w-full bg-black/40 border border-blue-500/50 rounded-lg p-3 text-white focus:ring-1 focus:ring-blue-500 outline-none"></textarea>
           <div class="flex gap-2 justify-end">
             <button @click="editingId = null" class="px-3 py-1 text-sm text-gray-400">Cancelar</button>
-            <button @click="saveEdit(comment.id)" class="px-4 py-1 text-sm bg-emerald-600 rounded-md font-bold">Guardar</button>
+            <button @click="saveEdit(comment.id)" class="px-4 py-1 text-sm bg-blue-600 rounded-md font-bold">Guardar</button>
           </div>
         </div>
         <p v-else class="text-gray-300 leading-relaxed">{{ comment.content }}</p>

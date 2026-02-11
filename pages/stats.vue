@@ -1,17 +1,17 @@
 <template>
-  <div class="p-6 max-w-6xl mx-auto pb-24 min-h-screen text-white">
+  <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen">
     <header class="mb-10">
       <h1 class="text-4xl font-black uppercase tracking-tighter italic">Estadísticas</h1>
       <p class="text-slate-500 font-bold uppercase text-xs tracking-widest mt-2">Análisis de tu biblioteca</p>
     </header>
 
-    <div v-if="loading" class="flex justify-center py-20">
-      <Loader2 class="animate-spin text-emerald-500" :size="40" />
+    <div v-if="loading">
+      <AppSpinner />
     </div>
 
-    <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div v-else>
 
-      <div class="bg-slate-900/50 border border-white/5 p-8 rounded-[40px] flex items-center gap-3 relative overflow-hidden">
+      <div class="bg-slate-900/50 border border-white/5 p-8 rounded-[40px] flex items-center gap-3 relative overflow-hidden mb-5">
         <Star class="text-amber-500 mb-4" :size="32" fill="currentColor" />
         <div>
           <h3 class="text-5xl font-black italic tracking-tighter">
@@ -22,8 +22,8 @@
         <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-amber-500/10 blur-3xl rounded-full"></div>
       </div>
 
-      <div class="md:col-span-2 bg-slate-900/50 border border-white/5 p-8 rounded-[40px]">
-        <h3 class="text-sm font-black uppercase tracking-widest mb-6 text-slate-400">Mis Imprescindibles</h3>
+      <div class="md:col-span-2 bg-slate-900/50 border border-white/5 p-8 rounded-[40px] mb-5">
+        <h3 class="text-sm font-black uppercase tracking-widest mb-6 text-blue-400">Mis Imprescindibles</h3>
         <div class="space-y-3">
           <div
               v-for="(item, index) in stats.topGames"
@@ -59,16 +59,16 @@
         </div>
       </div>
 
-      <div class="md:col-span-2 bg-slate-900/50 border border-white/5 p-8 rounded-[40px] flex items-center justify-between relative overflow-hidden">
+      <div class="md:col-span-2 bg-slate-900/50 border border-white/5 p-8 rounded-[40px] flex items-center justify-between relative overflow-hidden mb-5">
         <div class="relative z-10">
-          <p class="text-emerald-500 font-black uppercase tracking-[0.3em] text-xs mb-2">Total en Biblioteca</p>
+          <p class="text-blue-500 font-black uppercase tracking-[0.3em] text-xs mb-2">Total en Biblioteca</p>
           <h2 class="text-7xl font-black italic tracking-tighter">{{ stats.totalGames }}</h2>
           <p class="text-slate-400 mt-2 font-medium italic">Juegos coleccionados</p>
         </div>
         <Gamepad2 :size="120" class="text-white/5 absolute -right-4 -bottom-4 rotate-12" />
       </div>
 
-      <div class="bg-emerald-500 p-8 rounded-[40px] flex flex-col justify-between text-slate-950">
+      <div class="bg-blue-500 p-8 rounded-[40px] flex flex-col justify-between text-slate-950 mb-5">
         <Trophy :size="32" />
         <div>
           <h3 class="text-4xl font-black tracking-tighter leading-none">
@@ -78,8 +78,8 @@
         </div>
       </div>
 
-      <div class="bg-slate-900/50 border border-white/5 p-8 rounded-[40px]">
-        <h3 class="text-sm font-black uppercase tracking-widest mb-6 text-slate-400">Top Géneros</h3>
+      <div class="bg-slate-900/50 border border-white/5 p-8 rounded-[40px] mb-5">
+        <h3 class="text-sm font-black uppercase tracking-widest mb-6 text-blue-500">Top Géneros</h3>
         <div class="space-y-4">
           <div v-for="[name, count] in stats.byGenre" :key="name" class="flex items-center justify-between">
             <span class="text-sm font-bold uppercase tracking-tight">{{ name }}</span>
@@ -87,8 +87,6 @@
           </div>
         </div>
       </div>
-
-
 
     </div>
   </div>

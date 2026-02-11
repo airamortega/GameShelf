@@ -9,7 +9,7 @@
           <div class="flex items-center gap-3">
             <h1 class="text-4xl font-black text-white uppercase tracking-tighter italic">{{ list?.name }}</h1>
             <Lock v-if="!list?.is_public" class="w-6 h-6 text-gray-500" />
-            <Globe v-else class="w-6 h-6 text-emerald-500" />
+            <Globe v-else class="w-6 h-6 text-blue-500" />
           </div>
           <p class="text-gray-500 text-sm font-medium">Creada el {{ formatDate(list?.created_at) }}</p>
         </div>
@@ -41,7 +41,7 @@
     <div v-else class="grid grid-cols-2 md:grid-cols-5 gap-6">
       <div v-for="gameItem in games" :key="gameItem.games.id" class="relative group">
         <NuxtLink :to="`/game/${gameItem.games.id}`">
-          <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-3 border-2 border-transparent group-hover:border-emerald-500/50 transition-all shadow-lg">
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-3 border-2 border-transparent group-hover:border-blue-500/50 transition-all shadow-lg">
             <img :src="getCoverUrl(gameItem.games.cover)" :alt="gameItem.games.name" class="w-full h-full object-cover" />
           </div>
           <h4 class="text-sm font-bold text-white truncate">{{ gameItem.games.name }}</h4>
