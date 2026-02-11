@@ -20,6 +20,10 @@ export default defineNuxtConfig({
     }
   },
 
+  link: [
+    { rel: 'manifest', href: '/manifest.json' },
+  ],
+
   app: {
     head: {
       title: 'GameShelf',
@@ -29,9 +33,7 @@ export default defineNuxtConfig({
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
       ],
       link: [
-        // Icono estándar
-        { rel: 'icon', type: 'image/x-icon', href: '/512x512.png' },
-        // Icono para iOS (Apple)
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
       ]
     }
