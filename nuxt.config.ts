@@ -29,7 +29,9 @@ export default defineNuxtConfig({
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
       ],
       link: [
-        { rel: 'icon', type: 'public/icon-512x512.png', href: '/favicon.ico' },
+        // Icono estándar
+        { rel: 'icon', type: 'image/x-icon', href: '/512x512.png' },
+        // Icono para iOS (Apple)
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
       ]
     }
