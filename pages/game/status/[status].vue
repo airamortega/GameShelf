@@ -59,6 +59,9 @@
           </h3>
           <div class="h-0.5 w-0 bg-blue-500 group-hover:w-full transition-all duration-300 mt-2"></div>
         </div>
+
+        <MicroGameStatus :statuses="item.status"/>
+
       </NuxtLink>
     </div>
 
@@ -75,6 +78,7 @@
 
 <script setup>
 import { ChevronLeft, Search, X, SearchX } from 'lucide-vue-next'
+import MicroGameStatus from "~/components/microGameStatus.vue";
 
 const route = useRoute()
 const supabase = useSupabaseClient()

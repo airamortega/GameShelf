@@ -14,16 +14,16 @@
       <div class="bg-slate-900/50 border border-white/5 p-8 rounded-[40px] flex items-center gap-3 relative overflow-hidden mb-5">
         <Star class="text-amber-500 mb-4" :size="32" fill="currentColor" />
         <div>
-          <h3 class="text-5xl font-black italic tracking-tighter">
-            {{ stats.averageRating }}<span class="text-xl text-slate-500">/10</span>
+          <h3 class="text-7xl font-black italic tracking-tighter">
+            {{ stats.averageRating }}<span class="text-xl text-slate-500 tracking-wide"> / 10</span>
           </h3>
           <p class="text-[10px] font-black uppercase tracking-widest text-slate-500 mt-1">Nota media de tus votos</p>
         </div>
-        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-amber-500/10 blur-3xl rounded-full"></div>
+        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-amber-500/25 blur-3xl rounded-full"></div>
       </div>
 
       <div class="md:col-span-2 bg-slate-900/50 border border-white/5 p-8 rounded-[40px] mb-5">
-        <h3 class="text-sm font-black uppercase tracking-widest mb-6 text-blue-400">Mis Imprescindibles</h3>
+        <h3 class="text-sm font-black uppercase tracking-widest mb-6 text-blue-500">Mis Imprescindibles</h3>
         <div class="space-y-3">
           <div
               v-for="(item, index) in stats.topGames"
@@ -47,7 +47,7 @@
             />
 
             <div class="flex-1 min-w-0">
-              <h4 class="font-bold text-sm text-white truncate uppercase italic tracking-tight">
+              <h4 class="font-bold text-sm text-white uppercase italic tracking-tight">
                 {{ item.games?.name }}
               </h4>
             </div>
@@ -68,7 +68,7 @@
         <Gamepad2 :size="120" class="text-white/5 absolute -right-4 -bottom-4 rotate-12" />
       </div>
 
-      <div class="bg-blue-500 p-8 rounded-[40px] flex flex-col justify-between text-slate-950 mb-5">
+      <div class="relative bg-blue-500 p-8 rounded-[40px] flex flex-col justify-between text-slate-950 mb-5">
         <Trophy :size="32" />
         <div>
           <h3 class="text-4xl font-black tracking-tighter leading-none">
@@ -76,6 +76,7 @@
           </h3>
           <p class="font-bold uppercase text-[10px] tracking-widest opacity-80 mt-1">Ratio de Completado</p>
         </div>
+        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-blue-800/25 blur-2xl rounded-full"></div>
       </div>
 
       <div class="bg-slate-900/50 border border-white/5 p-8 rounded-[40px] mb-5">

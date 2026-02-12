@@ -50,13 +50,18 @@
 
         <gameRating :rating="item.games.total_rating" />
 
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent opacity-100 group-hover:opacity-100 transition-opacity"></div>
 
         <div class="absolute bottom-0 p-4 w-full transform translate-y-1 group-hover:translate-y-0 transition-transform">
-          <h3 class="text-white font-bold text-sm leading-tight line-clamp-2 uppercase italic tracking-tighter">
-            {{ item.games.name }}
-          </h3>
-          <div class="h-0.5 w-0 bg-blue-500 group-hover:w-full transition-all duration-300 mt-2"></div>
+          <div class="mb-5">
+            <h3 class="text-white font-bold text-sm leading-tight line-clamp-2 uppercase italic tracking-tighter">
+              {{ item.games.name }}
+            </h3>
+            <div class="h-0.5 w-0 bg-blue-500 group-hover:w-full transition-all duration-300 mt-2"></div>
+          </div>
+
+          <MicroGameStatus :statuses="item.status"/>
+
         </div>
       </NuxtLink>
     </div>
@@ -73,13 +78,13 @@
 </template>
 
 <script setup>
-import { ChevronLeft, Ghost, Search, X, SearchX } from 'lucide-vue-next'
+import { ChevronLeft, Circle, Search, X, SearchX } from 'lucide-vue-next'
+import MicroGameStatus from "~/components/microGameStatus.vue";
 
 const route = useRoute()
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
-const status = route.params.status // 'jugando', 'terminado', etc.
 const games = ref([])
 const loading = ref(true)
 const searchQuery = ref('')
@@ -94,21 +99,19 @@ const filteredGames = computed(() => {
   )
 })
 
-const statusLabel = computed(() => GameStatus[status] || status)
-
 const fetchGamesByStatus = async () => {
   if (!user.value) return
 
   loading.value = true
   try {
-    // Consulta con JOIN: Traemos la relación y los datos del juego
+
     const { data, error } = await supabase
         .from('user_library')
         .select(`
           status,
           games (id, name, cover, total_rating)
         `)
-        .eq('user_id', user.value.sub) // Filtramos en el array de Supabase
+        .eq('user_id', user.value.sub)
 
     if (error) throw error
 
@@ -123,3 +126,4 @@ const fetchGamesByStatus = async () => {
 
 onMounted(() => fetchGamesByStatus())
 </script>
+

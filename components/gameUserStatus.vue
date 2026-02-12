@@ -94,6 +94,8 @@ const props = defineProps({
   isAlreadyInBD: { type: Boolean, default: false }
 })
 
+const game = props.game
+
 const userStatus = defineModel()
 const userPlatforms = defineModel('userPlatforms')
 const isAlreadyInLibrary = defineModel('isAlreadyInLibrary')
@@ -134,7 +136,7 @@ const isInvalidSelection = computed(() => {
 const handleAction = () => props.isAlreadyInBD ? updateStatus() : saveToLibrary()
 
 const saveToLibrary = async () => {
-  if (!game.value || !user.value) return
+  if (!game || !user.value) return
 
   // --- VALIDACIONES DE ESTADO ---
   if (userStatus.value.length === 0) {
@@ -155,41 +157,41 @@ const saveToLibrary = async () => {
   loading.value = true
 
   try {
-    const releaseDate = game.value.first_release_date
-        ? new Date(game.value.first_release_date * 1000).toISOString()
+    const releaseDate = game.first_release_date
+        ? new Date(game.first_release_date * 1000).toISOString()
         : null;
 
     // Guardar/Actualizar el juego en la tabla maestra
     const { error: gameError } = await supabase
         .from('games')
         .upsert({
-          id: game.value.id,
-          name: game.value.name,
-          summary: game.value.summary,
-          cover: game.value.cover?.url,
+          id: game.id,
+          name: game.name,
+          summary: game.summary,
+          cover: game.cover?.url,
           release_date: releaseDate,
-          total_rating: game.value.total_rating
+          total_rating: game.total_rating
         })
     if (gameError) throw gameError
 
     // Procesar Géneros
-    if (game.value.genres?.length > 0) {
+    if (game.genres?.length > 0) {
       // Insertar géneros en la tabla maestra
       await supabase.from('genres').upsert(
-          game.value.genres.map(g => ({ id: g.id, name: g.name }))
+          game.genres.map(g => ({ id: g.id, name: g.name }))
       )
       // Crear vínculos en la tabla intermedia
       await supabase.from('game_genres').upsert(
-          game.value.genres.map(g => ({
-            game_id: game.value.id,
+          game.genres.map(g => ({
+            game_id: game.id,
             genre_id: g.id
           }))
       )
     }
 
     // Guardar Compañías (Involved Companies)
-    if (game.value.involved_companies) {
-      for (const inv of game.value.involved_companies) {
+    if (game.involved_companies) {
+      for (const inv of game.involved_companies) {
         // Guardamos la compañía en sí
         await supabase.from('companies').upsert({
           id: inv.company.id,
@@ -198,7 +200,7 @@ const saveToLibrary = async () => {
 
         // Creamos la relación marcando si es developer
         await supabase.from('game_companies').upsert({
-          game_id: game.value.id,
+          game_id: game.id,
           company_id: inv.company.id,
           is_developer: inv.developer
         })
@@ -208,7 +210,7 @@ const saveToLibrary = async () => {
     // Guardar la relación personal en 'user_library'
     const { error: libError } = await supabase.from('user_library').upsert({
       user_id: user.value.sub,
-      game_id: game.value.id,
+      game_id: game.id,
       status: userStatus.value,
       platforms: userPlatforms.value,
       added_at: new Date()
