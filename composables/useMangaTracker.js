@@ -19,21 +19,20 @@ export const useMangaTracker = () => {
     // Obtener último capítulo (Arreglado el parámetro de idioma)
     const getLatestChapter = async (mangaId, lang = 'es') => {
         try {
-            const data = await $fetch(`https://api.mangadex.org/manga/${mangaId}/feed`, {
+            const response = await $fetch('/api/mangadex', {
                 params: {
-                    limit: 1,
-                    'translatedLanguage[]': [lang],
-                    'order[chapter]': 'desc',
-                    'includeFutureUpdates': '0'
+                    id: mangaId,
+                    lang: lang
                 }
             });
 
-            if (data?.data?.[0]) {
-                return data.data[0].attributes.chapter;
+            if (response.data && response.data.length > 0) {
+                return response.data[0].attributes.chapter;
             }
-            return 'N/A';
-        } catch (e) {
-            return 'N/A';
+            return '0';
+        } catch (error) {
+            console.error("Proxy error:", error);
+            return '0';
         }
     };
 
