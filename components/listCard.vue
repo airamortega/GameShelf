@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-      :to="`/lists/${list.id}`"
+      :to="`/game/lists/${list.id}`"
       class="group relative block bg-slate-900 rounded-3xl border border-white/5 p-4 transition-all hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 active:scale-[0.98]"
   >
     <div class="flex flex-1 gap-2">

@@ -81,6 +81,14 @@
         </div>
       </section>
 
+      <section class="mt-5" >
+        <NuxtLink to="/" >
+          <div class="p-4 text-blue-500 font-bold bg-blue-600/5 backdrop-blur-md rounded-2xl border border-blue-600/10 divide-y divide-white/5 overflow-hidden">
+            Seleccionar Hub
+          </div>
+        </NuxtLink>
+      </section>
+
       <section class="mt-10" v-if="!isEditing">
         <button
             @click="handleLogout"
@@ -95,6 +103,8 @@
 </template>
 
 <script setup>
+import {ChevronLeft} from "lucide-vue-next";
+
 const user = useSupabaseUser()
 const client = useSupabaseClient()
 

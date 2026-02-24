@@ -1,8 +1,8 @@
 <template>
-  <div class="p-6 max-w-7xl mx-auto">
+  <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen">
     <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 pb-6 border-b border-white/5">
       <div class="flex items-center gap-4">
-        <NuxtLink to="/lists/shelfs" class="p-3 bg-white/5 rounded-2xl text-gray-400 hover:bg-white/10 hover:text-white transition-all">
+        <NuxtLink to="/game/lists/shelfs" class="p-3 bg-white/5 rounded-2xl text-gray-400 hover:bg-white/10 hover:text-white transition-all">
           <ChevronLeft class="w-6 h-6" />
         </NuxtLink>
         <div>
@@ -33,12 +33,12 @@
       <Gamepad2 class="w-16 h-16 text-gray-700 mx-auto mb-4" />
       <h3 class="text-xl font-bold text-white">Lista vacía</h3>
       <p class="text-gray-500 mb-6">Añade juegos desde su ficha técnica.</p>
-      <NuxtLink to="/" class="px-6 py-3 bg-white text-slate-950 rounded-xl font-bold text-sm">
+      <NuxtLink to="/public" class="px-6 py-3 bg-white text-slate-950 rounded-xl font-bold text-sm">
         Explorar juegos
       </NuxtLink>
     </div>
 
-    <div v-else class="grid grid-cols-2 md:grid-cols-5 gap-6">
+    <div v-else class="grid grid-cols-2 md:grid-cols-2 gap-6">
       <div v-for="gameItem in games" :key="gameItem.games.id" class="relative group">
         <NuxtLink :to="`/game/${gameItem.games.id}`">
           <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-3 border-2 border-transparent group-hover:border-blue-500/50 transition-all shadow-lg">
@@ -76,7 +76,7 @@
 
 <script setup>
 import { ChevronLeft, Lock, Globe, Gamepad2, Trash2, Pencil } from 'lucide-vue-next'
-import { useLists } from '@/composables/useLists'
+import { useLists } from '~/composables/useLists.js'
 import ListEditModal from "~/components/listEditModal.vue";
 import ListDeleteModal from "~/components/listDeleteModal.vue";
 

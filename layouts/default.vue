@@ -15,11 +15,14 @@
     </template>
 
     <slot />
-    <AppNavbar />
+    <AppNavbarManga v-if="mode === 'manga'" />
+    <AppNavbarGames v-else-if="mode === 'games'" />
   </div>
 </template>
 
 <script setup>
   import { useToast } from '~/composables/useToast'
   const { message, visible, type } = useToast()
+
+  const { mode } = useAppMode()
 </script>

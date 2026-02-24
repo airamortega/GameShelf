@@ -1,140 +1,85 @@
+<script setup>
+  definePageMeta({
+    layout: 'auth'
+  })
+
+  // Extraemos las funciones del composable
+  const { setMode, mode } = useAppMode();
+  const router = useRouter();
+
+  const selectApp = (selectedMode) => {
+    if (typeof setMode === 'function') {
+      setMode(selectedMode);
+
+      if (selectedMode === 'manga') {
+        router.push('/manga/search');
+      } else {
+        router.push('/game/inicio');
+      }
+    } else {
+      console.error("Error: setMode no está definida correctamente en el composable");
+    }
+  };
+</script>
+
 <template>
   <div class="p-6 max-w-lg mx-auto pb-24 min-h-screen">
-    <header class="flex items-center mb-10 mt-4">
-      <div>
-        <h1 class="text-4xl font-black tracking-tight text-white italic uppercase">Biblioteca</h1>
-        <p class="text-gray-500 mt-1 font-medium">Gestiona tu colección de juegos</p>
-      </div>
-      <NuxtLink to="/shuffle" class="ml-auto w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl text-white active:scale-90 transition-all">
-        <Dices class="w-6 h-6" />
-      </NuxtLink>
-    </header>
 
-    <div v-if="isLoading">
-      <AppSpinner />
+    <div class="text-center space-y-2 mb-4">
+      <h1 class="text-4xl font-black text-white uppercase tracking-tighter italic">Selecciona tu Hub</h1>
+      <p class="text-slate-400 text-sm font-medium">¿Qué quieres hacer hoy?</p>
     </div>
 
-    <div v-else >
-      <div class="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden divide-y divide-white/5 shadow-2xl mb-5">
-        <NuxtLink
-            :to="`/library`"
-            class="flex items-center p-5 transition-all duration-200 hover:bg-white/[0.07] active:scale-[0.98] group"
-        >
-          <div
-              class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner transition-transform group-hover:scale-110"
-              :style="{ backgroundColor: '#94a3b8' + '22', color: '#94a3b8' }"
-          >
-            <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-library-icon lucide-library w-8 h-8"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg></span>
-          </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
 
-          <div class="flex-1 ml-4">
-            <h3 class="text-white font-bold text-lg leading-tight uppercase">Todos</h3>
-            <p class="text-gray-500 text-xs font-medium tracking-wider mt-0.5">Colección completa</p>
+      <button
+          @click="selectApp('manga')"
+          class="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 p-8 text-left transition-all hover:border-blue-500/50 hover:bg-blue-500/5 active:scale-95"
+      >
+        <div class="relative z-10 space-y-4 text-center">
+          <div class="flex items-center justify-center">
+            <div class="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+            </div>
           </div>
+          <div>
+            <h2 class="text-2xl font-black text-white uppercase italic">Manga</h2>
+            <p class="text-slate-400 text-sm">Gestiona tu lectura y capítulos pendientes.</p>
+          </div>
+        </div>
+        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-blue-500/10 blur-3xl group-hover:bg-blue-500/20 transition-colors"></div>
+      </button>
 
-          <div class="flex items-center gap-3">
-          <span class="text-xl font-black text-gray-400">
-            {{ counts['total'] || 0 }}
-          </span>
-            <span class="text-2xl text-white/20 group-hover:text-white/40 transition-colors font-light">
-            ›
-          </span>
+      <button
+          @click="selectApp('games')"
+          class="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 p-8 text-left transition-all hover:border-purple-500/50 hover:bg-purple-500/5 active:scale-95"
+      >
+        <div class="relative z-10 space-y-4 text-center">
+          <div class="flex items-center justify-center">
+            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-500 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M16 12h2"/><path d="M17 11v2"/></svg>
+            </div>
           </div>
-        </NuxtLink>
-      </div>
-
-      <div class="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden divide-y divide-white/5 shadow-2xl">
-        <NuxtLink
-            v-for="(info, status) in GameStatusLabels"
-            :key="status"
-            :to="`/game/status/${status}`"
-            class="flex items-center p-5 transition-all duration-200 hover:bg-white/[0.07] active:scale-[0.98] group"
-        >
-          <div
-              class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-inner transition-transform group-hover:scale-110"
-              :style="{ backgroundColor: info.color + '22', color: info.color }"
-          >
-            <span v-html="info.icon"></span>
+          <div>
+            <h2 class="text-2xl font-black text-white uppercase italic">Juegos</h2>
+            <p class="text-slate-400 text-sm">Organiza tu backlog y lista de deseos.</p>
           </div>
-
-          <div class="flex-1 ml-4">
-            <h3 class="text-white font-bold text-lg leading-tight uppercase">{{ info.label }}</h3>
-            <p class="text-gray-500 text-xs font-medium tracking-wider mt-0.5">{{ info.subText }}</p>
-          </div>
-
-          <div class="flex items-center gap-3">
-          <span class="text-xl font-black text-gray-400">
-            {{ counts[status.toLowerCase()] || 0 }}
-          </span>
-            <span class="text-2xl text-white/20 group-hover:text-white/40 transition-colors font-light">
-            ›
-          </span>
-          </div>
-        </NuxtLink>
-      </div>
+        </div>
+        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-purple-500/10 blur-3xl group-hover:bg-purple-500/20 transition-colors"></div>
+      </button>
 
     </div>
+
   </div>
 </template>
 
-<script setup>
-  import { ref } from 'vue'
-  import {Dices} from "lucide-vue-next";
-
-  const user = useSupabaseUser()
-  const supabase = useSupabaseClient()
-
-  const counts = ref({
-    total: 0,
-    pendiente: 0,
-    jugando: 0,
-    terminado: 0,
-    platino: 0,
-    abandonado: 0,
-    deseados: 0
-  })
-  const isLoading = ref(true)
-
-  const fetchLibraryStats = async () => {
-    if (!user.value) return
-
-    try {
-      // Traemos solo la columna status de todos los juegos del usuario
-      const { data, error } = await supabase
-          .from('user_library')
-          .select('*')
-          .eq('user_id', user.value.sub)
-
-      if (error) throw error
-
-      // Reiniciamos contadores
-      const tempCounts = { total: data.length, deseados: 0, jugando: 0, terminado: 0, platino: 0, abandonado: 0, pendiente: 0 }
-
-      // Procesamos cada juego
-      data.forEach(item => {
-        if (item.status && Array.isArray(item.status)) {
-          item.status.forEach(s => {
-            const key = s.toLowerCase()
-            if (tempCounts.hasOwnProperty(key)) {
-              tempCounts[key]++
-            }
-          })
-        }
-      })
-
-      counts.value = { ...tempCounts }
-    } catch (err) {
-      console.error("Error obteniendo conteo de estados:", err)
-    } finally {
-      isLoading.value = false
-    }
-  }
-
-  onMounted(() => fetchLibraryStats())
-
-</script>
-
 <style scoped>
+div {
+  animation: fadeIn 0.6s ease-out;
+}
 
-
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>

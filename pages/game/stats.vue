@@ -95,7 +95,7 @@
 
 <script setup>
 import { Gamepad2, Trophy, Loader2, Star } from 'lucide-vue-next'
-import { useStats } from '~/composables/useStats'
+import { useStats } from '~/composables/useStats.js'
 
 const { getStats } = useStats()
 const stats = ref(null)
