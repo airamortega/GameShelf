@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
     const supabase = createClient(
         process.env.SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!
+        process.env.SUPABASE_KEY!
     )
 
     const { data, error, count } = await supabase
